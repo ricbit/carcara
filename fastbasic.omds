@@ -1,0 +1,96 @@
+
+<!DOCTYPE xomds>
+<DebugSession version="0.1">
+    <Symbols>
+        <Symbol>
+            <type>jump</type>
+            <name>Expression Evaluator</name>
+            <value>19556</value>
+            <validSlots>65535</validSlots>
+            <validRegisters>262143</validRegisters>
+        </Symbol>
+        <Symbol>
+            <type>jump</type>
+            <name>STREND</name>
+            <value>63174</value>
+            <validSlots>65535</validSlots>
+            <validRegisters>262143</validRegisters>
+        </Symbol>
+        <Symbol>
+            <type>jump</type>
+            <name>Is there stack space available?</name>
+            <value>25182</value>
+            <validSlots>65535</validSlots>
+            <validRegisters>262143</validRegisters>
+        </Symbol>
+        <Symbol>
+            <type>jump</type>
+            <name>VALTYP</name>
+            <value>63075</value>
+            <validSlots>65535</validSlots>
+            <validRegisters>262143</validRegisters>
+        </Symbol>
+        <Symbol>
+            <type>jump</type>
+            <name>Copy DAC to ARG</name>
+            <value>12045</value>
+            <validSlots>65535</validSlots>
+            <validRegisters>262143</validRegisters>
+        </Symbol>
+        <Symbol>
+            <type>jump</type>
+            <name>Copy CBED to DAC</name>
+            <value>11969</value>
+            <validSlots>65535</validSlots>
+            <validRegisters>262143</validRegisters>
+        </Symbol>
+        <Symbol>
+            <type>jump</type>
+            <name>Convert to Double</name>
+            <value>12346</value>
+            <validSlots>65535</validSlots>
+            <validRegisters>262143</validRegisters>
+        </Symbol>
+        <Symbol>
+            <type>value</type>
+            <name>Table with infix math operators</name>
+            <value>15697</value>
+            <validSlots>65535</validSlots>
+            <validRegisters>262143</validRegisters>
+        </Symbol>
+        <Symbol>
+            <type>jump</type>
+            <name>Table with infix math operators</name>
+            <value>15697</value>
+            <validSlots>65535</validSlots>
+            <validRegisters>262143</validRegisters>
+        </Symbol>
+        <Symbol>
+            <type>jump</type>
+            <name>Multiply two Doubles</name>
+            <value>10214</value>
+            <validSlots>65535</validSlots>
+            <validRegisters>262143</validRegisters>
+        </Symbol>
+        <Symbol>
+            <type>jump</type>
+            <name>Hook HFRME (called when starting evaluating)</name>
+            <value>65382</value>
+            <validSlots>65535</validSlots>
+            <validRegisters>262143</validRegisters>
+        </Symbol>
+        <Symbol>
+            <type>jump</type>
+            <name>Factor Evaluator</name>
+            <value>19911</value>
+            <validSlots>65535</validSlots>
+            <validRegisters>262143</validRegisters>
+        </Symbol>
+    </Symbols>
+    <Breakpoints>
+        <Breakpoint type="breakpoint" id="bp#1" primarySlot="*" secondarySlot="*" segment="-1">
+            <address>19556</address>
+            <condition></condition>
+        </Breakpoint>
+    </Breakpoints>
+</DebugSession>
