@@ -7,89 +7,136 @@
             <name>Expression Evaluator</name>
             <value>19556</value>
             <validSlots>65535</validSlots>
-            <validRegisters>262143</validRegisters>
+            <validRegisters>3968</validRegisters>
         </Symbol>
         <Symbol>
             <type>jump</type>
             <name>STREND</name>
             <value>63174</value>
             <validSlots>65535</validSlots>
-            <validRegisters>262143</validRegisters>
+            <validRegisters>3968</validRegisters>
         </Symbol>
         <Symbol>
             <type>jump</type>
             <name>Is there stack space available?</name>
             <value>25182</value>
             <validSlots>65535</validSlots>
-            <validRegisters>262143</validRegisters>
+            <validRegisters>3968</validRegisters>
         </Symbol>
         <Symbol>
             <type>jump</type>
             <name>VALTYP</name>
             <value>63075</value>
             <validSlots>65535</validSlots>
-            <validRegisters>262143</validRegisters>
+            <validRegisters>3968</validRegisters>
         </Symbol>
         <Symbol>
             <type>jump</type>
             <name>Copy DAC to ARG</name>
             <value>12045</value>
             <validSlots>65535</validSlots>
-            <validRegisters>262143</validRegisters>
+            <validRegisters>3968</validRegisters>
         </Symbol>
         <Symbol>
             <type>jump</type>
             <name>Copy CBED to DAC</name>
             <value>11969</value>
             <validSlots>65535</validSlots>
-            <validRegisters>262143</validRegisters>
+            <validRegisters>3968</validRegisters>
         </Symbol>
         <Symbol>
             <type>jump</type>
             <name>Convert to Double</name>
             <value>12346</value>
             <validSlots>65535</validSlots>
-            <validRegisters>262143</validRegisters>
+            <validRegisters>3968</validRegisters>
         </Symbol>
         <Symbol>
             <type>value</type>
             <name>Table with infix math operators</name>
             <value>15697</value>
             <validSlots>65535</validSlots>
-            <validRegisters>262143</validRegisters>
+            <validRegisters>3968</validRegisters>
         </Symbol>
         <Symbol>
             <type>jump</type>
             <name>Table with infix math operators</name>
             <value>15697</value>
             <validSlots>65535</validSlots>
-            <validRegisters>262143</validRegisters>
+            <validRegisters>3968</validRegisters>
         </Symbol>
         <Symbol>
             <type>jump</type>
             <name>Multiply two Doubles</name>
             <value>10214</value>
             <validSlots>65535</validSlots>
-            <validRegisters>262143</validRegisters>
+            <validRegisters>3968</validRegisters>
         </Symbol>
         <Symbol>
             <type>jump</type>
             <name>Hook HFRME (called when starting evaluating)</name>
             <value>65382</value>
             <validSlots>65535</validSlots>
-            <validRegisters>262143</validRegisters>
+            <validRegisters>3968</validRegisters>
         </Symbol>
         <Symbol>
             <type>jump</type>
             <name>Factor Evaluator</name>
             <value>19911</value>
             <validSlots>65535</validSlots>
-            <validRegisters>262143</validRegisters>
+            <validRegisters>3968</validRegisters>
+        </Symbol>
+        <Symbol>
+            <type>jump</type>
+            <name>Infix evaluation</name>
+            <value>19746</value>
+            <validSlots>65535</validSlots>
+            <validRegisters>3968</validRegisters>
+        </Symbol>
+        <Symbol>
+            <type>jump</type>
+            <name>Signed integer multiplication</name>
+            <value>12691</value>
+            <validSlots>65535</validSlots>
+            <validRegisters>3968</validRegisters>
+        </Symbol>
+        <Symbol>
+            <type>jump</type>
+            <name>DAC+2</name>
+            <value>63480</value>
+            <validSlots>65535</validSlots>
+            <validRegisters>3968</validRegisters>
+        </Symbol>
+        <Symbol>
+            <type>jump</type>
+            <name>Apply CINT to DAC</name>
+            <value>12170</value>
+            <validSlots>65535</validSlots>
+            <validRegisters>3968</validRegisters>
+        </Symbol>
+        <Symbol>
+            <type>jump</type>
+            <name>Table of logical operators</name>
+            <value>20344</value>
+            <validSlots>65535</validSlots>
+            <validRegisters>3968</validRegisters>
         </Symbol>
     </Symbols>
     <Breakpoints>
+        <Breakpoint type="breakpoint" id="bp#2" primarySlot="1" secondarySlot="*" segment="0">
+            <address>16455</address>
+            <condition></condition>
+        </Breakpoint>
+        <Breakpoint type="breakpoint" id="bp#3" primarySlot="*" secondarySlot="*" segment="-1">
+            <address>16455</address>
+            <condition></condition>
+        </Breakpoint>
+        <Breakpoint type="breakpoint" id="bp#4" primarySlot="*" secondarySlot="*" segment="-1">
+            <address>19746</address>
+            <condition></condition>
+        </Breakpoint>
         <Breakpoint type="breakpoint" id="bp#1" primarySlot="*" secondarySlot="*" segment="-1">
-            <address>19556</address>
+            <address>65387</address>
             <condition></condition>
         </Breakpoint>
     </Breakpoints>

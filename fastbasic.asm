@@ -15,6 +15,11 @@ enaslt          equ     00024h
 stktop          equ     0F674h
 chgcpu          equ     00180h
 hook_hntpl      equ     0FF6Bh
+next_token      equ     04C67h
+dac             equ     0F7F6h
+basic_temp3     equ     0F69Dh
+infix_eval      equ     04D22h
+valtyp          equ     0F663h
 
 ; --------------------------------------------------------------------------
 ; ROM header and start code.
@@ -58,6 +63,47 @@ whereami:
         ret
 
 hook_handler:
+        ; check stage
+        ld      hl, 7
+        add     hl, sp
+        bit     6, (hl)
+        jr      z, apply_operator
+        ; check for multiplication
+        cp      07Ch
+        ret     nz
+        ld      b, a
+        ld      a, (valtyp)
+        cp      2
+        ld      a, b
+        ret     nz
+        ; eat away the return address
+        exx
+        pop     hl
+        pop     de
+        pop     bc
+        exx
+        pop     bc
+
+        ; push values
+        ld      hl, (dac+2)
+        push    hl
+        ld      hl, 0202h
+        push    hl
+        ;ld      hl, hook_hntpl
+        ld      hl, 04D22h
+        push    hl
+        ld      hl, (basic_temp3)
+        ; return directly to next token evaluation
+        ld      bc, next_token
+        push    bc
+        exx
+        push    bc
+        push    de
+        push    hl
+        exx
+        ret
+
+apply_operator:
         ret
 
         align   04000h
