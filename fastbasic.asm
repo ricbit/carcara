@@ -1,9 +1,9 @@
 ; Fast BASIC using GR8NET.
 ; by Ricardo Bittencourt 2016
 
-        output  fastbasic.rom
+        output  fastbasic.bin
 
-        org     04000h
+        org     09000h -7
 
 ; --------------------------------------------------------------------------
 ; BIOS calls and variables.
@@ -24,12 +24,48 @@ valtyp          equ     0F663h
 ; --------------------------------------------------------------------------
 ; ROM header and start code.
 
-        db      41h, 42h
+        db      0FEh
         dw      start
-        align   16
+        dw      program_end
+        dw      start
 
 start:
-        call    whereami
+        ld      ix, hook_hntpl
+        ld      (ix+0), 0C3h
+        ld      (ix+1), low hook_handler
+        ld      (ix+2), high hook_handler
+        ret
+
+hook_handler:
+        ; check for multiplication
+        cp      07Ch
+        ret     nz
+        ; check for integer operand
+        ld      b, a
+        ld      a, (valtyp)
+        cp      2
+        ld      a, b
+        ret     nz
+        ; eat away return address
+        pop     bc
+
+        ; push values
+        ld      hl, (dac+2)
+        push    hl
+        ld      hl, 0202h
+        push    hl
+        ld      hl, apply_operator
+        push    hl
+        ; return directly to next token evaluation
+        ld      hl, (basic_temp3)
+        jp      next_token
+
+apply_operator:
+        ld      hl, (dac+2)
+        pop     de
+        pop     bc
+        muluw   hl, bc
+        ld      (dac+2), hl
         ret
 
 whereami:
@@ -43,7 +79,7 @@ whereami:
         ld      hl, exptbl
         add     hl, bc
         or      (hl)
-        jp      p, 1f
+        ret     p
         ; Slot is extended
         ld      c, a
         inc     hl
@@ -53,60 +89,9 @@ whereami:
         ld      a, (hl)
         and     1100b
         or      c
-1:
-        ld      ix, hook_hntpl
-        ld      (ix+0), 0F7h
-        ld      (ix+1), a
-        ld      (ix+2), low hook_handler
-        ld      (ix+3), high hook_handler
-        ld      (ix+4), 0C9h
         ret
 
-hook_handler:
-        ; check stage
-        ld      hl, 7
-        add     hl, sp
-        bit     6, (hl)
-        jr      z, apply_operator
-        ; check for multiplication
-        cp      07Ch
-        ret     nz
-        ld      b, a
-        ld      a, (valtyp)
-        cp      2
-        ld      a, b
-        ret     nz
-        ; eat away the return address
-        exx
-        pop     hl
-        pop     de
-        pop     bc
-        exx
-        pop     bc
-
-        ; push values
-        ld      hl, (dac+2)
-        push    hl
-        ld      hl, 0202h
-        push    hl
-        ;ld      hl, hook_hntpl
-        ld      hl, 04D22h
-        push    hl
-        ld      hl, (basic_temp3)
-        ; return directly to next token evaluation
-        ld      bc, next_token
-        push    bc
-        exx
-        push    bc
-        push    de
-        push    hl
-        exx
-        ret
-
-apply_operator:
-        ret
-
-        align   04000h
+program_end:
         end
 
 

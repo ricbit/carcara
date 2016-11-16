@@ -1,9 +1,10 @@
-main : fastbasic.rom
+main : fastbasic.bin
 
-fastbasic.rom : fastbasic.asm
+fastbasic.bin : fastbasic.asm
 	./sjasmplus fastbasic.asm -lst=fastbasic.lst
 
-rom : fastbasic.rom
+rom : fastbasic.bin
+	cp fastbasic.bin disk/rbasic.bin
 	./openmsx -machine Panasonic_FS-A1GT fastbasic.rom \
 	-script fastbasic.tcl -diska disk
 
