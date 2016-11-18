@@ -3,12 +3,11 @@
 
         output  fastbasic.bin
 
-        org     09000h -7
+        org     0C800h -7
 
 ; --------------------------------------------------------------------------
 ; BIOS calls and variables.
 
-bdos_call       equ     0F37Dh
 rslreg          equ     00138h
 exptbl          equ     0FCC1h
 enaslt          equ     00024h
@@ -56,11 +55,15 @@ hook_handler:
         push    hl
         ld      hl, apply_operator
         push    hl
+
         ; return directly to next token evaluation
         ld      hl, (basic_temp3)
         jp      next_token
 
 apply_operator:
+        ld      a, (valtyp)
+        cp      2
+        jp      nz, 04D22h
         ld      hl, (dac+2)
         pop     de
         pop     bc

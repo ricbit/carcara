@@ -5,6 +5,6 @@ fastbasic.bin : fastbasic.asm
 
 rom : fastbasic.bin
 	cp fastbasic.bin disk/rbasic.bin
-	./openmsx -machine Panasonic_FS-A1GT fastbasic.rom \
+	./openmsx -machine Panasonic_FS-A1GT \
 	-script fastbasic.tcl -diska disk
 
