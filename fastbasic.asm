@@ -3,7 +3,7 @@
 
         output  fastbasic.bin
 
-        org     0C800h -7
+        org     0C800h - 7
 
 ; --------------------------------------------------------------------------
 ; BIOS calls and variables.
@@ -36,19 +36,19 @@ start:
         ret
 
 hook_handler:
-        ; check for multiplication
+        ; Check for multiplication
         cp      07Ch
         ret     nz
-        ; check for integer operand
+        ; Check for integer operand
         ld      b, a
         ld      a, (valtyp)
         cp      2
         ld      a, b
         ret     nz
-        ; eat away return address
+        ; Eat away return address
         pop     bc
 
-        ; push values
+        ; Push values
         ld      hl, (dac+2)
         push    hl
         ld      hl, 0202h
@@ -56,18 +56,58 @@ hook_handler:
         ld      hl, apply_operator
         push    hl
 
-        ; return directly to next token evaluation
+        ; Return directly to next token evaluation
         ld      hl, (basic_temp3)
         jp      next_token
 
 apply_operator:
+        ; Is operand integer?
         ld      a, (valtyp)
         cp      2
         jp      nz, 04D22h
+        ; Get operands
         ld      hl, (dac+2)
         pop     de
         pop     bc
+        ; Save sign of result
+        ld      a, h
+        xor     b
+        ; Take absolute value of operand 1
+        bit     7, h
+        jr      z, 1f
+        ld      de, hl
+        or      a
+        sbc     hl, hl
+        sbc     hl, de
+1:
+        ; Take absolute value of operand 2
+        bit     7, b
+        jr      z, 1f
+        ex      de, hl
+        or      a
+        sbc     hl, hl
+        sbc     hl, bc
+        ld      bc, hl
+        ex      de, hl
+1:
+        ; Multiply
         muluw   hl, bc
+        ; Overflow? (ans>=0x8000?)
+        bit     7, h
+        jr      nz, overflow
+        ; Restore sign of result
+        bit     7, a
+        jr      z, 1f
+        ex      de, hl
+        or      a
+        sbc     hl, hl
+        sbc     hl, de
+1:
+        ld      (dac+2), hl
+        ret
+overflow:
+        ; Promote to single
+        ld      hl, 0
         ld      (dac+2), hl
         ret
 
