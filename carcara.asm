@@ -14,14 +14,15 @@ enaslt          equ     00024h
 stktop          equ     0F674h
 chgcpu          equ     00180h
 hook_hntpl      equ     0FF6Bh
-next_token      equ     04C67h
+parse_next      equ     04C67h
 dac             equ     0F7F6h
-basic_temp3     equ     0F69Dh
+next_token_addr equ     0F69Dh
 infix_eval      equ     04D22h
 valtyp          equ     0F663h
 int_to_single   equ     02FCBh
 dac_to_stack    equ     02EB1h
 single_multiply equ     0325Ch
+msxversion      equ     0002Dh
 
 ; --------------------------------------------------------------------------
 ; ROM header and start code.
@@ -32,6 +33,9 @@ single_multiply equ     0325Ch
         dw      start
 
 start:
+        ld      a, (msxversion)
+        cp      3
+        ret     nz
         ld      ix, hook_hntpl
         ld      (ix+0), 0C3h
         ld      (ix+1), low hook_handler
@@ -60,8 +64,8 @@ hook_handler:
         push    hl
 
         ; Return directly to next token evaluation
-        ld      hl, (basic_temp3)
-        jp      next_token
+        ld      hl, (next_token_addr)
+        jp      parse_next
 
 apply_operator:
         ; Is operand integer?
@@ -152,8 +156,6 @@ whereami:
         and     1100b
         or      c
         ret
-
-savesign:       db      0
 
 program_end:
         end
