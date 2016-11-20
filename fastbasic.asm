@@ -1,4 +1,4 @@
-; Fast BASIC using GR8NET.
+; Carcara Fast BASIC 
 ; by Ricardo Bittencourt 2016
 
         output  fastbasic.bin
@@ -19,6 +19,9 @@ dac             equ     0F7F6h
 basic_temp3     equ     0F69Dh
 infix_eval      equ     04D22h
 valtyp          equ     0F663h
+int_to_single   equ     02FCBh
+dac_to_stack    equ     02EB1h
+single_multiply equ     0325Ch
 
 ; --------------------------------------------------------------------------
 ; ROM header and start code.
@@ -69,9 +72,13 @@ apply_operator:
         ld      hl, (dac+2)
         pop     de
         pop     bc
+        ; Save operands in case of overflow
+        push    hl
+        push    bc
         ; Save sign of result
         ld      a, h
         xor     b
+        ex      af, af
         ; Take absolute value of operand 1
         bit     7, h
         jr      z, 1f
@@ -93,23 +100,35 @@ apply_operator:
         ; Multiply
         muluw   hl, bc
         ; Overflow? (ans>=0x8000?)
-        bit     7, h
+        ld      a, 080h
+        and     h
+        or      d
+        or      e
         jr      nz, overflow
         ; Restore sign of result
-        bit     7, a
-        jr      z, 1f
+        ex      af, af
+        rlca
+        jr      nc, 1f
         ex      de, hl
         or      a
         sbc     hl, hl
         sbc     hl, de
 1:
+        ; Clean stack, place result in DAC and return
+        pop     bc
+        pop     bc
         ld      (dac+2), hl
         ret
 overflow:
         ; Promote to single
-        ld      hl, 0
-        ld      (dac+2), hl
-        ret
+        pop     hl
+        call    int_to_single
+        pop     hl
+        call    dac_to_stack
+        call    int_to_single
+        pop     bc
+        pop     de
+        jp      single_multiply
 
 whereami:
         ; Where am I
@@ -133,6 +152,8 @@ whereami:
         and     1100b
         or      c
         ret
+
+savesign:       db      0
 
 program_end:
         end
