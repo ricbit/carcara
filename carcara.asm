@@ -1,7 +1,7 @@
 ; Carcara Fast BASIC 
 ; by Ricardo Bittencourt 2016
 
-        output  fastbasic.bin
+        output  carcara.bin
 
         org     0C800h - 7
 

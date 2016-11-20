@@ -1,10 +1,10 @@
-main : fastbasic.bin
+main : carcara.bin
 
-fastbasic.bin : fastbasic.asm
-	./sjasmplus fastbasic.asm -lst=fastbasic.lst
+carcara.bin : carcara.asm
+	./sjasmplus carcara.asm -lst=carcara.lst
 
-rom : fastbasic.bin
-	cp fastbasic.bin disk/fbasic.bin
+rom : carcara.bin
+	cp carcara.bin disk/carcara.bin
 	./openmsx -machine Panasonic_FS-A1GT \
-	-script fastbasic.tcl -diska disk
+	-script carcara.tcl -diska disk
 
